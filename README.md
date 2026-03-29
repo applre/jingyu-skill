@@ -13,6 +13,7 @@
 | Skill | 说明 |
 |-------|------|
 | [website-archiver](./website-archiver/) | 网站内容归档：自动抓取网站所有页面，输出编号的 Markdown 文档 + 全页截图 |
+| [code-chinese-comments](./code-chinese-comments/) | 代码中文注释：为每行代码添加中文学习注释，标注变量类型，帮助初学者理解代码 |
 
 ## 安装
 
