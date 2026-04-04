@@ -1,7 +1,8 @@
----
+***
+
 name: website-archiver
 description: 系统化抓取网站的所有页面内容和结构，整理成编号的 markdown 文档+全页截图，统一放在一个带日期的文件夹下。当用户想要归档一个网站、抓取官网内容、整理某个产品/公司的网站资料、做竞品分析需要完整记录网站内容时使用。即使用户只说"帮我看看这个网站"或"把这个网站内容整理一下"，也应该触发此 skill。
----
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Site Archiver — 网站内容归档
 
@@ -19,10 +20,14 @@ prompt="Extract the complete website structure: all navigation links, page secti
 ```
 
 从结果中提取：
-- 主导航菜单及子项
-- 页脚链接
-- 所有可访问的子页面 URL
-- 核心内容（tagline、功能描述、价值主张等）
+
+* 主导航菜单及子项
+
+* 页脚链接
+
+* 所有可访问的子页面 URL
+
+* 核心内容（tagline、功能描述、价值主张等）
 
 Jina 的调用方式是在域名前加 `r.jina.ai/`，不保留原 URL 的 http/https 前缀。限 20 RPM。
 
@@ -31,10 +36,14 @@ Jina 的调用方式是在域名前加 `r.jina.ai/`，不保留原 URL 的 http/
 根据 Phase 1 发现的页面列表，用 WebFetch + Jina 并行抓取所有子页面。每批 4-5 个并行请求，避免触发限流。
 
 对每个页面的 prompt 根据页面类型调整：
-- 功能页："Extract all feature descriptions, capabilities, use cases. Return complete content."
-- 定价页："Extract all pricing plans, features included in each plan, prices. Return complete content."
-- 关于页："Extract all content about the company. Return complete content."
-- 通用页："Extract all content. Return complete."
+
+* 功能页："Extract all feature descriptions, capabilities, use cases. Return complete content."
+
+* 定价页："Extract all pricing plans, features included in each plan, prices. Return complete content."
+
+* 关于页："Extract all content about the company. Return complete content."
+
+* 通用页："Extract all content. Return complete."
 
 如果某个 URL 返回 404，记录下来但不中断流程，在总览文档中标注。
 
@@ -43,12 +52,17 @@ Jina 的调用方式是在域名前加 `r.jina.ai/`，不保留原 URL 的 http/
 创建输出文件夹：`{目标路径}/{网站名}-{YYYY-MM-DD}/`
 
 文件编号规则：
-- `00-网站结构总览.md` — 网站地图、导航结构、文件索引（必须首先创建）
-- `01-首页.md`
-- `02-xx.md` ~ `0N-xx.md` — 按网站逻辑分组（功能、场景、公司等）
-- 内容较多的分类（如多个 use case）合并到一个文件中，用二级标题区分
+
+* `00-网站结构总览.md` — 网站地图、导航结构、文件索引（必须首先创建）
+
+* `01-首页.md`
+
+* `02-xx.md` ~ `0N-xx.md` — 按网站逻辑分组（功能、场景、公司、价格等）
+
+* 内容较多的分类（如多个 use case）合并到一个文件中，用二级标题区分
 
 每个文档的头部格式：
+
 ```markdown
 # 页面标题
 
@@ -58,10 +72,14 @@ Jina 的调用方式是在域名前加 `r.jina.ai/`，不保留原 URL 的 http/
 ```
 
 总览文档包含：
-- 完整网站地图（树形结构）
-- 导航结构（表格）
-- 文件索引（文件名 → 内容说明的映射表）
-- 404 页面标注
+
+* 完整网站地图（树形结构）
+
+* 导航结构（表格）
+
+* 文件索引（文件名 → 内容说明的映射表）
+
+* 404 页面标注
 
 ### Phase 4: 截图（可选）
 
@@ -78,6 +96,7 @@ Jina 的调用方式是在域名前加 `r.jina.ai/`，不保留原 URL 的 http/
 1. 创建 `screenshots/` 子文件夹
 2. 用 `mcp__chrome_devtools__new_page` 打开页面（`background=true`, `timeout=30000`）
 3. **截图前先滚动触发懒加载**——很多网站的图片、视频、动画使用懒加载，不滚动就不会渲染，全页截图会出现大片空白。用 `mcp__chrome_devtools__evaluate_script` 执行滚动脚本：
+
    ```javascript
    async () => {
      const delay = ms => new Promise(r => setTimeout(r, ms));
@@ -105,21 +124,29 @@ Jina 的调用方式是在域名前加 `r.jina.ai/`，不保留原 URL 的 http/
 ### Phase 5: 交付
 
 向用户展示最终文件结构和统计：
-- 文件数量、截图数量
-- 树形目录结构
-- 如有 404 页面，列出
+
+* 文件数量、截图数量
+
+* 树形目录结构
+
+* 如有 404 页面，列出
 
 如果用户提到 Obsidian 或想存入 vault，将整个文件夹移动到 Obsidian Vault 的合适位置。
 
 ## 输出语言
 
-- 默认跟随用户的语言偏好
-- 文档用目标语言整理，关键英文原文以引用块保留
-- 文件名使用中文或英文，与文档内容语言一致
+* 默认跟随用户的语言偏好
+
+* 文档用目标语言整理，关键英文原文以引用块保留
+
+* 文件名使用中文或英文，与文档内容语言一致
 
 ## 注意事项
 
-- Jina 适合文章、文档等以正文为核心的页面；对 SPA、需要 JS 渲染的动态内容可能提取不完整
-- 如果 Jina 返回的内容明显不完整（如只有 404 或空内容），尝试不带 Jina 前缀直接 WebFetch
-- 博客列表页可能需要动态加载，静态抓取可能只拿到部分文章，在文档中注明
-- 截图是全页截图，长页面的 PNG 文件可能较大（数 MB）
+* Jina 适合文章、文档等以正文为核心的页面；对 SPA、需要 JS 渲染的动态内容可能提取不完整
+
+* 如果 Jina 返回的内容明显不完整（如只有 404 或空内容），尝试不带 Jina 前缀直接 WebFetch
+
+* 博客列表页可能需要动态加载，静态抓取可能只拿到部分文章，在文档中注明
+
+* 截图是全页截图，长页面的 PNG 文件可能较大（数 MB）

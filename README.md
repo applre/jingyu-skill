@@ -1,83 +1,14 @@
 # jingyu-skill
 
-Claude Code Skills 合集 — 产品经理 & 内容创作者的效率工具箱。
+经过实测评测的 Claude Code Skills 精选集。每个 skill 附带评测报告、测试用例和实际输出。
 
-## Skills 列表
+## 评测总览
 
-| Skill | 说明 | 触发方式 |
-|-------|------|----------|
-| [website-archiver](./website-archiver/) | 网站内容归档 | "帮我抓取这个网站"、"归档竞品官网" |
-| [code-chinese-comments](./code-chinese-comments/) | 代码中文注释 | "给这段代码加中文注释"、"帮我注释一下" |
-| [topic-collector](./topic-collector/) | AI 热点日报采集 | "开始今日选题"、"采集热点"、"今日AI热点" |
-
----
-
-## website-archiver — 网站内容归档
-
-**用途**：输入一个 URL，自动抓取网站所有页面，输出结构化 Markdown 文档 + 全页截图。适合竞品调研、产品分析。
-
-**使用方式**：
-```
-帮我把 https://example.com 的网站内容整理一下
-抓取 https://competitor.com 所有页面，整理成文档
-```
-
-**输出示例**：
-```
-competitor-2026-03-29/
-├── 00-网站结构总览.md
-├── 01-首页.md
-├── 02-定价.md
-├── 03-功能介绍.md
-└── screenshots/
-    ├── 01-首页.png
-    └── 02-定价.png
-```
-
-**依赖**：Chrome + Remote Debugging（截图功能需要，非必须）
-
----
-
-## code-chinese-comments — 代码中文注释
-
-**用途**：为代码逐行添加中文注释，标注变量类型和含义。帮助非工程师（产品经理、运营）快速理解开源项目代码逻辑。
-
-**使用方式**：
-```
-帮我给这个文件加上中文注释
-注释一下这段代码，方便学习
-```
-
-**效果**：在代码关键位置添加中文注释，解释变量用途、函数逻辑、数据流向，不改变原始代码行为。
-
----
-
-## topic-collector — AI 热点日报采集
-
-**用途**：从 Product Hunt、Hacker News、技术博客等来源并行采集 AI 相关热点，整理成格式化日报写入 Apple Notes，同时在对话中输出 Markdown 版本。
-
-**使用方式**：
-```
-开始今日选题
-采集热点
-看看今天有什么新闻
-今日AI热点
-```
-
-**聚焦领域**：
-1. Vibe Coding / Claude Code / Cursor 实践技巧
-2. MCP Server / AI Agent 工作流
-3. 模型厂商动态（Anthropic、OpenAI、Google、xAI）
-4. AI 新产品（Product Hunt 上榜）
-5. 社区热议（HN、Reddit）
-
-**输出**：
-- Apple Notes 中创建 `AI热点 MM/DD` 笔记（HTML 格式，含可点击链接）
-- 对话中同步输出 Markdown 版本
-
-**依赖**：WebSearch 工具、macOS（Apple Notes 写入需要 osascript）
-
----
+| Skill | 分类 | 总评 | 一句话 | 评测报告 |
+|-------|------|------|--------|----------|
+| [website-archiver](skills/website-archiver/) | 调研 | 待评测 | 网站内容归档，输出 Markdown + 截图 | [报告](reviews/website-archiver.md) |
+| [code-chinese-comments](skills/code-chinese-comments/) | 编码 | 待评测 | 为代码添加中文学习注释 | [报告](reviews/code-chinese-comments.md) |
+| [topic-collector](skills/topic-collector/) | 内容创作 | 待评测 | AI 热点日报采集 | [报告](reviews/topic-collector.md) |
 
 ## 安装
 
@@ -88,10 +19,32 @@ competitor-2026-03-29/
 git clone https://github.com/applre/jingyu-skill.git
 
 # 复制需要的 skill
-cp -r jingyu-skill/topic-collector ~/.claude/skills/
-cp -r jingyu-skill/website-archiver ~/.claude/skills/
-cp -r jingyu-skill/code-chinese-comments ~/.claude/skills/
+cp -r jingyu-skill/skills/website-archiver ~/.claude/skills/
 ```
+
+## 仓库结构
+
+```
+jingyu-skill/
+├── skills/          # skill 源码（可直接 cp 安装）
+├── reviews/         # 评测报告（结论 + 多维度分析）
+├── tests/           # 测试用例 + 实际输出（原始证据）
+└── comparisons/     # 同类 skill 横向比较
+```
+
+## 评测标准
+
+每个 skill 的评测包含：
+
+- **多场景测试** — 基础场景、边界场景、复杂场景
+- **实际输出记录** — prompt、完整日志、生成的产物
+- **适用/不适用场景** — 明确告诉你什么时候该用、什么时候别用
+- **横向比较** — 同类 skill 之间的对比
+
+## 依赖
+
+- [Claude Code](https://claude.ai/code)
+- Chrome + Remote Debugging（部分 skill 需要）
 
 ## License
 
