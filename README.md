@@ -4,11 +4,18 @@
 
 ## 评测总览
 
-| Skill | 分类 | 总评 | 一句话 | 评测报告 |
-|-------|------|------|--------|----------|
-| [website-archiver](skills/website-archiver/) | 调研 | 待评测 | 网站内容归档，输出 Markdown + 截图 | [报告](reviews/website-archiver.md) |
-| [code-chinese-comments](skills/code-chinese-comments/) | 编码 | 待评测 | 为代码添加中文学习注释 | [报告](reviews/code-chinese-comments.md) |
-| [topic-collector](skills/topic-collector/) | 内容创作 | 待评测 | AI 热点日报采集 | [报告](reviews/topic-collector.md) |
+### 通用
+
+| Category | Skill | 介绍 | 来源 | 评分 | 评测报告 |
+|----------|-------|------|------|------|----------|
+| info | [topic-collector](skills/topic-collector/) | AI 热点日报采集，从 PH/HN/博客等并行采集 | 自研 | 待评测 | [报告](reviews/topic-collector.md) |
+
+### 职能
+
+| Category | Skill | 介绍 | 来源 | 评分 | 评测报告 |
+|----------|-------|------|------|------|----------|
+| PM | [website-archiver](skills/website-archiver/) | 网站内容归档，输出 Markdown + 全页截图 | 自研 | 待评测 | [报告](reviews/website-archiver.md) |
+| PM | [code-chinese-comments](skills/code-chinese-comments/) | 为代码添加中文学习注释，帮 PM 看懂开源项目 | 自研 | 待评测 | [报告](reviews/code-chinese-comments.md) |
 
 ## 安装
 
